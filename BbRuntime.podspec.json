@@ -1,6 +1,6 @@
 {
-  "name": "Bb-All",
-  "version": "0.0.1",
+  "name": "BbRuntime",
+  "version": "0.0.2",
   "summary": "Objects and Class categories for managing Bb Runtime.",
   "authors": { 
     "Travis Henspeter": "developer@birdsoundmusic.com"
@@ -15,8 +15,11 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/BbRuntime.git",
-    "tag": "0.0.1"
+    "tag": "0.0.2"
   },
+  "source_files": [
+	  "BbRuntime/*.{h,m}"
+  ],
   "frameworks": [
     "Foundation",
     "UIKit",
@@ -24,3 +27,4 @@
     "MapKit",
     "CoreLocation"
   ]
+}
