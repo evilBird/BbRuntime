@@ -1,6 +1,6 @@
 {
   "name": "BbRuntime",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "summary": "Objects and Class categories for managing Bb Runtime.",
   "authors": { 
     "Travis Henspeter": "developer@birdsoundmusic.com"
@@ -15,7 +15,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/evilBird/BbRuntime.git",
-    "tag": "0.0.2"
+    "tag": "0.0.3"
   },
   "source_files": [
 	  "BbRuntime/*.{h,m}"

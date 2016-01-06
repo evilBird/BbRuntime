@@ -45,6 +45,7 @@
 @interface BbRuntimeLookup (Properties)
 
 + (NSArray *)getPropertyNamesForClass:(NSString *)className;
++ (objc_property_t)getProperty:(NSString *)propertyName ofClass:(NSString *)className;
 + (NSString *)getAttributesForProperty:(NSString *)propertyName ofClass:(NSString *)className;
 
 @end

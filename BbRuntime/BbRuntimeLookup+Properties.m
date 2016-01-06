@@ -55,4 +55,22 @@
     return attributes;
 }
 
++ (objc_property_t)getProperty:(NSString *)propertyName ofClass:(NSString *)className
+{
+    unsigned int count;
+    objc_property_t *properties = class_copyPropertyList(NSClassFromString(className), &count);
+    objc_property_t result = NULL;
+    for (NSUInteger i = 0; i < count; i ++ ) {
+        objc_property_t p = properties[i];
+        const char *pname = property_getName(p);
+        NSString *name = [NSString stringWithUTF8String:pname];
+        
+        NSLog(@"name: %@",name);
+        
+    }
+    
+    return result;
+}
+
+
 @end

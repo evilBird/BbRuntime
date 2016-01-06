@@ -88,6 +88,23 @@
     return [self.availableSelectors containsObject:selectorName];
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+    NSString *selectorName = NSStringFromSelector(aSelector);
+    NSArray *adoptedProtocolNames = self.adoptedProtocols.allKeys;
+    NSMethodSignature *result = nil;
+    for (NSString *protocolName in adoptedProtocolNames) {
+        NSDictionary *methodSigDictionary = self.adoptedProtocols[protocolName];
+        NSArray *selectorNames = methodSigDictionary.allKeys;
+        if ( [selectorNames containsObject:selectorName] ) {
+            result = methodSigDictionary[selectorName];
+            break;
+        }
+    }
+    
+    return result;
+}
+
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
     SEL theSelector = anInvocation.selector;
