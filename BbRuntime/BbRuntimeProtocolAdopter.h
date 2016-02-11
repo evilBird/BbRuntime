@@ -20,4 +20,7 @@
 
 - (instancetype)initWithClientClass:(NSString *)className clientProperty:(NSString *)propertyName proxy:(id<BbRuntimeProtocolAdopterProxy>)proxyObject;
 
+- (instancetype)initWithProxy:(id<BbRuntimeProtocolAdopterProxy>)proxyObject;
+- (BOOL)adoptProtocolWithName:(NSString *)protocolName;
+
 @end

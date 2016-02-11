@@ -37,9 +37,21 @@
     return self;
 }
 
+- (instancetype)initWithProxy:(id<BbRuntimeProtocolAdopterProxy>)proxyObject
+{
+    self = [super init];
+    if ( self ) {
+        _proxyObject = proxyObject;
+        [self commonInit];
+    }
+    
+    return self;
+}
+
 - (void)commonInit
 {
     NSArray *protocolNames = [BbRuntimeLookup getProtocolNames];
+    
     if ( nil != protocolNames ){
         self.availableProtocols = [NSSet setWithArray:protocolNames];
     }
@@ -57,18 +69,27 @@
 - (void)adoptProtocolsForObjectProperty:(NSString *)propertyName class:(NSString *)className
 {
     NSString *protocolName = [BbRuntimeLookup getProtocolForObjectProperty:propertyName class:className];
-    if ( nil == protocolName || ![self.availableProtocols containsObject:protocolName] || [self adoptsProtocol:protocolName] ) {
-        return;
+    [self adoptProtocolWithName:protocolName];
+}
+
+- (BOOL)adoptProtocolWithName:(NSString *)protocolName
+{
+    if ( nil == protocolName || ![self.availableProtocols containsObject:protocolName] ) {
+        return NO;
+    }
+    
+    if ( [self adoptsProtocol:protocolName] ) {
+        return YES;
     }
     
     NSDictionary *protocolSigs = [BbRuntimeLookup getMethodSignaturesForProtocol:protocolName];
     if ( nil == protocolSigs ) {
-        return;
+        return NO;
     }
     
     [self.availableSelectors addObjectsFromArray:protocolSigs.allKeys];
     self.adoptedProtocols[protocolName] = protocolSigs;
-    
+    return YES;
 }
 
 - (BOOL)adoptsProtocol:(NSString *)protocolName
@@ -85,7 +106,8 @@
 - (BOOL)respondsToSelector:(SEL)aSelector
 {
     NSString *selectorName = NSStringFromSelector(aSelector);
-    return [self.availableSelectors containsObject:selectorName];
+    BOOL result = [self.availableSelectors containsObject:selectorName];
+    return result;
 }
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector

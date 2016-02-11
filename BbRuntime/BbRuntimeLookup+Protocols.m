@@ -63,6 +63,7 @@
             results[name] = methodSignature;
         }
     }
+    
     free(descs);
     descs = protocol_copyMethodDescriptionList(p, YES, YES, &count);
     
@@ -74,8 +75,44 @@
             results[name] = methodSignature;
         }
     }
-    free(descs);
     
+    free(descs);
+    descs = protocol_copyMethodDescriptionList(p, YES, NO, &count);
+    
+    for (NSUInteger i = 0; i < count; i ++ ) {
+        struct objc_method_description desc = descs[i];
+        if ( NULL != desc.name && NULL != desc.types ) {
+            NSString *name = NSStringFromSelector(desc.name);
+            NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:desc.types];
+            results[name] = methodSignature;
+        }
+    }
+    
+    free(descs);
+    descs = protocol_copyMethodDescriptionList(p, NO, NO, &count);
+    
+    for (NSUInteger i = 0; i < count; i ++ ) {
+        struct objc_method_description desc = descs[i];
+        if ( NULL != desc.name && NULL != desc.types ) {
+            NSString *name = NSStringFromSelector(desc.name);
+            NSMethodSignature *methodSignature = [NSMethodSignature signatureWithObjCTypes:desc.types];
+            results[name] = methodSignature;
+        }
+    }
+    
+    free(descs);
+    /*
+    unsigned int adoptedProtocolCount;
+    Protocol *__unsafe_unretained *adopted = protocol_copyProtocolList(p, &adoptedProtocolCount);
+    for (NSUInteger i = 0; i < adoptedProtocolCount; i ++ ) {
+        Protocol *ap = adopted[i];
+        const char *apname = protocol_getName(ap);
+        NSString *apName = [NSString stringWithUTF8String:apname];
+        NSLog(@"Protocol %@ adopts protocol %@",protocolName,apName);
+    }
+    
+    free(&adopted);
+    */
     return results;
 }
 

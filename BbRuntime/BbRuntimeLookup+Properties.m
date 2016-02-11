@@ -51,7 +51,6 @@
     }
     
     attributes = [NSString stringWithUTF8String:property_getAttributes(property)];
-    
     return attributes;
 }
 
