@@ -14,6 +14,7 @@
 - (id)getReturnValueObject;
 - (NSArray *)getArgumentObjects;
 - (id)getObjectArgumentAtIndex:(NSUInteger)index;
+- (BOOL)hasBlockArgumentAtIndices:(NSIndexSet **)indices;
 
 - (void)setArgumentsWithObjects:(id)objects;
 - (void)setArgumentAtIndex:(NSUInteger)index withObject:(id)object;

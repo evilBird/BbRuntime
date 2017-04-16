@@ -21,7 +21,11 @@
     NSMethodSignature *methodSignature = [[target class] instanceMethodSignatureForSelector:selector];
     
     if ( nil == methodSignature ) {
-        return nil;
+        if ([target respondsToSelector:selector]) {
+            
+        }else{
+            return nil;
+        }
     }
     
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];

@@ -20,6 +20,11 @@
   "source_files": [
 	  "BbRuntime/*.{h,m}"
   ],
+  "dependencies" : {
+  	  "BlocksKit" : [
+  	  	
+  	  ]
+  },
   "frameworks": [
     "Foundation",
     "UIKit",

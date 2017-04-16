@@ -21,6 +21,30 @@ typedef NS_ENUM(NSInteger, ArgType) {
 
 @implementation NSInvocation (BbRuntime)
 
+- (BOOL)hasBlockArgumentAtIndices:(NSIndexSet **)indices
+{
+    NSUInteger numArgs = [self.methodSignature numberOfArguments]-2;
+    NSMutableIndexSet *myIndices = nil;
+    BOOL result = NO;
+    for (NSUInteger i = 0; i < numArgs; i ++) {
+        NSUInteger index = i+2;
+        const char *argType = [self.methodSignature getArgumentTypeAtIndex:index];
+        if (strcmp(argType, "@?") == 0 ) {
+            if (!myIndices) {
+                myIndices = [NSMutableIndexSet indexSet];
+                result = YES;
+            }
+            
+            [myIndices addIndex:index];
+        }
+    }
+    
+    if (result) {
+        *indices = myIndices;
+    }
+    return result;
+}
+
 - (NSString *)getTypeString
 {
     NSMutableString *typeString = [NSMutableString stringWithString:[BbRuntimeLookup encoding2String:[self.methodSignature methodReturnType]]];

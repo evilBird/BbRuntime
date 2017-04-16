@@ -75,6 +75,8 @@
 - (BOOL)adoptProtocolWithName:(NSString *)protocolName
 {
     if ( nil == protocolName || ![self.availableProtocols containsObject:protocolName] ) {
+        Protocol *p = objc_getProtocol([protocolName UTF8String]);
+        
         return NO;
     }
     
